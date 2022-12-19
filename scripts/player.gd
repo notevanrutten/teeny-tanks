@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-const MOVEMENT_SPEED = 300.0
-const ROTATION_SPEED = 2.0
+const MOVEMENT_SPEED = 250.0
+const ROTATION_SPEED = 3.0
 
 const LABEL_OFFSET_X = 50.0
-const LABEL_OFFSET_Y = 70.0
+const LABEL_OFFSET_Y = 60.0
 
 func is_local_authority():
 	return $Networking/MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
@@ -43,4 +43,4 @@ func _physics_process(delta):
 	$Networking.sync_rotation = rotation
 
 func update_label() -> void:
-	$Label.set_global_position(Vector2(position.x - LABEL_OFFSET_X, position.y - LABEL_OFFSET_Y))
+	$Label.set_global_position(Vector2(global_position.x - LABEL_OFFSET_X, global_position.y - LABEL_OFFSET_Y))
