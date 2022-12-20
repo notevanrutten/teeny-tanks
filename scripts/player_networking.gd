@@ -7,5 +7,6 @@ var sync_position: Vector2:
 
 var sync_velocity: Vector2
 var sync_rotation: float
+var sync_color: Color
 
 var processed_position: bool
