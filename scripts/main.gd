@@ -1,7 +1,7 @@
 extends Node
 
-@export
 var player_scene = preload("res://scenes/player.tscn")
+var player_list
 
 func _enter_tree():
 	if "--server" in OS.get_cmdline_args():
@@ -22,7 +22,7 @@ func start_network(server: bool) -> void:
 func create_player(id: int) -> void:
 	var player = player_scene.instantiate()
 	player.name = str(id)
-	$Players.add_child(player)
+	$SpawnPath.add_child(player)
 
 func destroy_player(id: int) -> void:
-	$Players.get_node(str(id)).queue_free()
+	$SpawnPath.get_node(str(id)).queue_free()
