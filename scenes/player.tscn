@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cu7g814odt7xm" path="res://assets/tank.png" id="2_4insk"]
 [ext_resource type="Script" path="res://scripts/player_networking.gd" id="3_e1huf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nwk2"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77etr"]
 size = Vector2(15.3333, 14.6667)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i4y8k"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_81jjq"]
 properties/0/path = NodePath(".:sync_position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -30,7 +30,7 @@ offset = Vector2(0, 5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(7.15256e-07, 1)
 scale = Vector2(3, 3)
-shape = SubResource("RectangleShape2D_3nwk2")
+shape = SubResource("RectangleShape2D_77etr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -49,4 +49,4 @@ one_shot = true
 script = ExtResource("3_e1huf")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Networking"]
-replication_config = SubResource("SceneReplicationConfig_i4y8k")
+replication_config = SubResource("SceneReplicationConfig_81jjq")

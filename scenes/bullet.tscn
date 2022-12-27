@@ -3,27 +3,30 @@
 [ext_resource type="Texture2D" uid="uid://dxle2v8ltjbv7" path="res://assets/bullet.png" id="1_bc1p3"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_l42c3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7auxl"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_bbi6e"]
 radius = 4.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_om8p2"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_65r0i"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/sync = true
+properties/2/path = NodePath(".:modulate")
+properties/2/spawn = true
+properties/2/sync = true
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="CharacterBody2D"]
 script = ExtResource("1_l42c3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_bc1p3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
-shape = SubResource("CircleShape2D_7auxl")
+shape = SubResource("CircleShape2D_bbi6e")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_om8p2")
+replication_config = SubResource("SceneReplicationConfig_65r0i")

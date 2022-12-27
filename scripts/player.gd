@@ -6,7 +6,7 @@ const ROTATION_SPEED = 3.0
 const LABEL_OFFSET_X = 50.0
 const LABEL_OFFSET_Y = 70.0
 
-const BULLET_OFFSET = 40.0
+const BULLET_OFFSET = 43.0
 const RELOAD_TIME = 0.5
 
 var bullet_scene = preload("res://scenes/bullet.tscn")
@@ -65,7 +65,7 @@ func update_label() -> void:
 func shoot(spawner: StringName) -> void:
 	var bullet = bullet_scene.instantiate()
 	bullet.spawner = spawner
-	bullet.position = global_position + Vector2(0, -BULLET_OFFSET).rotated(global_rotation)
+	bullet.position = global_position + Vector2(0, -BULLET_OFFSET).rotated(rotation)
 	bullet.rotation = global_rotation
 	get_node("/root/Main/SpawnPath").add_child(bullet, true)
 
