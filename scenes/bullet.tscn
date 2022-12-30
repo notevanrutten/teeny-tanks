@@ -1,12 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://ba52t3t2ovfuf"]
+[gd_scene load_steps=7 format=3 uid="uid://ba52t3t2ovfuf"]
 
 [ext_resource type="Texture2D" uid="uid://dxle2v8ltjbv7" path="res://assets/bullet.png" id="1_bc1p3"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_l42c3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bbi6e"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_nkedm"]
 radius = 4.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_65r0i"]
+[sub_resource type="Animation" id="Animation_n6aiw"]
+resource_name = "spawn"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.5, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_70rq1"]
+_data = {
+"spawn": SubResource("Animation_n6aiw")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jn56"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -21,12 +56,18 @@ properties/2/sync = true
 script = ExtResource("1_l42c3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 2)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_bc1p3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_bbi6e")
+shape = SubResource("CircleShape2D_nkedm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_70rq1")
+}
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_65r0i")
+replication_config = SubResource("SceneReplicationConfig_7jn56")

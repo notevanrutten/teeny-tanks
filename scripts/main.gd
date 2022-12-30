@@ -22,7 +22,7 @@ func start_network(server: bool) -> void:
 func create_player(id: int) -> void:
 	var player = player_scene.instantiate()
 	player.name = str(id)
-	$SpawnPath.add_child(player)
+	add_child(player)
 
 func destroy_player(id: int) -> void:
-	$SpawnPath.get_node(str(id)).queue_free()
+	get_node(str(id)).queue_free()
