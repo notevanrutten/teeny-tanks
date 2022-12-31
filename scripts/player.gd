@@ -8,8 +8,12 @@ const LABEL_OFFSET_Y = 70.0
 
 const BULLET_OFFSET = 43.0
 const RELOAD_TIME = 1.0
+const RESPAWN_TIME = 5.0
 
 var bullet_scene = preload("res://scenes/bullet.tscn")
+var explosion_scene = preload("res://scenes/explosion.tscn")
+
+@export var invincibility: bool
 
 func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(int(str(name)))
@@ -18,7 +22,8 @@ func _ready():
 	$Label.set_as_top_level(true)
 	$Label.text = name
 	
-	$Timer.wait_time = RELOAD_TIME
+	$ReloadTimer.wait_time = RELOAD_TIME
+	$RespawnTimer.wait_time = RESPAWN_TIME
 	
 	if $MultiplayerSynchronizer.is_multiplayer_authority():
 		randomize()
@@ -26,14 +31,19 @@ func _ready():
 		var g = randf_range(0.2, 1.0)
 		var b = randf_range(0.2, 1.0)
 		$Sprite2D.modulate = Color(r, g, b)
-		$MultiplayerSynchronizer.modulate = Color(r, g, b)
 		
 		respawn()
 
 func _physics_process(delta):
 	if $MultiplayerSynchronizer.is_multiplayer_authority():
-		if Input.is_action_just_pressed("mouse_1") && $Timer.is_stopped():
-			$Timer.start()
+		if not $RespawnTimer.is_stopped():
+			visible = false
+			$CollisionShape2D.disabled = true
+			update_synchronizer()
+			return
+		
+		if Input.is_action_just_pressed("mouse_1") && $ReloadTimer.is_stopped():
+			$ReloadTimer.start()
 			rpc_id(1, "shoot", name)
 		
 		velocity = Vector2.ZERO
@@ -46,11 +56,16 @@ func _physics_process(delta):
 		if Input.is_action_pressed("down"):
 			velocity = Vector2(0, +MOVEMENT_SPEED).rotated(rotation)
 		move_and_slide()
-
-		$MultiplayerSynchronizer.position = position
-		$MultiplayerSynchronizer.rotation = rotation
 		
 		$Label.position = Vector2(position.x - LABEL_OFFSET_X, position.y - LABEL_OFFSET_Y)
+		
+		update_synchronizer()
+
+func respawn() -> void:
+	randomize()
+	position = get_node("/root/Main/Spawn").get_child(randi_range(0,3)).position
+	rotation = 0
+	$AnimationPlayer.play("respawn")
 
 @rpc(any_peer, call_local, reliable)
 func shoot(spawner: StringName) -> void:
@@ -58,9 +73,29 @@ func shoot(spawner: StringName) -> void:
 	bullet.spawner = spawner
 	bullet.position = position + Vector2(0, -BULLET_OFFSET).rotated(rotation)
 	bullet.rotation = rotation
-	get_node("/root/Main").add_child(bullet, true)
+	get_node("/root/Main/Bullets").add_child(bullet, true)
 
-func respawn() -> void:
-	randomize()
-	position = get_node("/root/Main/Spawn").get_child(randi_range(0,3)).position
-	$Shield/AnimationPlayer.play("spawn")
+func update_synchronizer() -> void:
+	$MultiplayerSynchronizer.position = position
+	$MultiplayerSynchronizer.rotation = rotation
+	$MultiplayerSynchronizer.visibile = visible
+	$MultiplayerSynchronizer.invincibility = invincibility
+	$MultiplayerSynchronizer.collision = $CollisionShape2D.disabled
+	$MultiplayerSynchronizer.modulate = $Sprite2D.modulate
+	$MultiplayerSynchronizer.shield_modulate = $Shield.modulate
+
+@rpc(any_peer, call_local, reliable)
+func hit() -> void:
+	$RespawnTimer.start()
+	rpc_id(1, "explode")
+
+func _on_respawn_timer_timeout():
+	visible = true
+	$CollisionShape2D.disabled = false
+	respawn()
+
+@rpc(any_peer, call_local, reliable)
+func explode() -> void:
+	var explosion = explosion_scene.instantiate()
+	explosion.position = position
+	get_node("/root/Main/Explosions").add_child(explosion, true)

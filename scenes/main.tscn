@@ -106,6 +106,20 @@ position = Vector2(280, 1512)
 [node name="Marker3" type="Marker2D" parent="Spawn"]
 position = Vector2(1512, 1512)
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player.tscn", "res://scenes/bullet.tscn", "res://scenes/shield.tscn")
-spawn_path = NodePath("..")
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn")
+spawn_path = NodePath("../Bullets")
+
+[node name="Explosions" type="Node" parent="."]
+
+[node name="ExplosionSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/explosion.tscn")
+spawn_path = NodePath("../Explosions")
