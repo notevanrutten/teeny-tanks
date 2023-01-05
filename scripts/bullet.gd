@@ -22,5 +22,6 @@ func _physics_process(delta):
 				var player = get_node("/root/Main/Players").get_child(i)
 				
 				if (collision.get_collider() == player) && (player.invincibility == false):
+					get_node("/root/Main/Players/" + spawner).score += 1
 					player.rpc_id(int(str(player.name)), "hit")
 					queue_free()

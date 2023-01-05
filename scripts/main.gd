@@ -16,7 +16,7 @@ func start_network(server: bool) -> void:
 		multiplayer.peer_disconnected.connect(self.destroy_player)
 		peer.create_server(9999)
 	else:
-		peer.create_client("localhost:" + str(9999))
+		peer.create_client("evanrutten.com:" + str(9999))
 	multiplayer.set_multiplayer_peer(peer)
 
 func create_player(id: int) -> void:

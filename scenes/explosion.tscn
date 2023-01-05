@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dad7iaca0ie3n" path="res://assets/explosion_3.png" id="4_y6gkn"]
 [ext_resource type="Texture2D" uid="uid://bgco32mto5f4f" path="res://assets/explosion_4.png" id="5_tiu0w"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mt34v"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_xvo6t"]
 animations = [{
 "frames": [ExtResource("1_s32ua"), ExtResource("2_3216x"), ExtResource("3_0nxy3"), ExtResource("4_y6gkn"), ExtResource("5_tiu0w")],
 "loop": false,
@@ -15,7 +15,7 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hmsvm"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2dm64"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -25,12 +25,12 @@ scale = Vector2(0.65, 0.65)
 script = ExtResource("1_g3ot1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-frames = SubResource("SpriteFrames_mt34v")
+frames = SubResource("SpriteFrames_xvo6t")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_hmsvm")
+replication_config = SubResource("SceneReplicationConfig_2dm64")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

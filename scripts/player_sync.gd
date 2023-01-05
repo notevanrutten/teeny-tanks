@@ -22,6 +22,13 @@ extends MultiplayerSynchronizer
 		else:
 			get_parent().visible = value
 
+@export var score: bool:
+	set(value):
+		if is_multiplayer_authority():
+			score = value
+		else:
+			get_parent().score = value
+
 @export var invincibility: bool:
 	set(value):
 		if is_multiplayer_authority():

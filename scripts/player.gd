@@ -13,6 +13,7 @@ const RESPAWN_TIME = 5.0
 var bullet_scene = preload("res://scenes/bullet.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
 
+@export var score: int
 @export var invincibility: bool
 
 func _ready():
@@ -32,6 +33,7 @@ func _ready():
 		var b = randf_range(0.2, 1.0)
 		$Sprite2D.modulate = Color(r, g, b)
 		
+		score = 0
 		respawn()
 
 func _physics_process(delta):
@@ -86,6 +88,7 @@ func update_synchronizer() -> void:
 
 @rpc(any_peer, call_local, reliable)
 func hit() -> void:
+	score = 0
 	$RespawnTimer.start()
 	rpc_id(1, "explode")
 

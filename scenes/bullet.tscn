@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://dxle2v8ltjbv7" path="res://assets/bullet.png" id="1_bc1p3"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_l42c3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nkedm"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_8b5ue"]
 radius = 4.0
 
-[sub_resource type="Animation" id="Animation_n6aiw"]
+[sub_resource type="Animation" id="Animation_xgd10"]
 resource_name = "spawn"
 length = 3.0
 tracks/0/type = "method"
@@ -36,12 +36,12 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_70rq1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_riw2s"]
 _data = {
-"spawn": SubResource("Animation_n6aiw")
+"spawn": SubResource("Animation_xgd10")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jn56"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8mkyx"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -62,12 +62,12 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_bc1p3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_nkedm")
+shape = SubResource("CircleShape2D_8b5ue")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_70rq1")
+"": SubResource("AnimationLibrary_riw2s")
 }
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_7jn56")
+replication_config = SubResource("SceneReplicationConfig_8mkyx")
