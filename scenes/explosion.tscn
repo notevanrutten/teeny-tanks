@@ -1,36 +1,36 @@
-[gd_scene load_steps=9 format=3 uid="uid://32muouto4ms8"]
+[gd_scene load_steps=9 format=3 uid="uid://tesv0u5g7ffc"]
 
 [ext_resource type="Script" path="res://scripts/explosion.gd" id="1_g3ot1"]
-[ext_resource type="Texture2D" uid="uid://ck1k671y16ikf" path="res://assets/explosion_0.png" id="1_s32ua"]
-[ext_resource type="Texture2D" uid="uid://dvorlecbbx62v" path="res://assets/explosion_1.png" id="2_3216x"]
-[ext_resource type="Texture2D" uid="uid://dg0iyogc00wc4" path="res://assets/explosion_2.png" id="3_0nxy3"]
-[ext_resource type="Texture2D" uid="uid://dad7iaca0ie3n" path="res://assets/explosion_3.png" id="4_y6gkn"]
-[ext_resource type="Texture2D" uid="uid://bgco32mto5f4f" path="res://assets/explosion_4.png" id="5_tiu0w"]
+[ext_resource type="Texture2D" uid="uid://ck1k671y16ikf" path="res://assets/explosion_0.png" id="2_lqixk"]
+[ext_resource type="Texture2D" uid="uid://dvorlecbbx62v" path="res://assets/explosion_1.png" id="3_ta5y5"]
+[ext_resource type="Texture2D" uid="uid://dg0iyogc00wc4" path="res://assets/explosion_2.png" id="4_4phdl"]
+[ext_resource type="Texture2D" uid="uid://dad7iaca0ie3n" path="res://assets/explosion_3.png" id="5_xfar7"]
+[ext_resource type="Texture2D" uid="uid://bgco32mto5f4f" path="res://assets/explosion_4.png" id="6_g0eju"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xvo6t"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_7m2vg"]
 animations = [{
-"frames": [ExtResource("1_s32ua"), ExtResource("2_3216x"), ExtResource("3_0nxy3"), ExtResource("4_y6gkn"), ExtResource("5_tiu0w")],
+"frames": [ExtResource("2_lqixk"), ExtResource("3_ta5y5"), ExtResource("4_4phdl"), ExtResource("5_xfar7"), ExtResource("6_g0eju")],
 "loop": false,
 "name": &"default",
 "speed": 15.0
 }]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2dm64"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_26a21"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
 
 [node name="Explosion" type="Node2D"]
-scale = Vector2(0.65, 0.65)
 script = ExtResource("1_g3ot1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-frames = SubResource("SpriteFrames_xvo6t")
+scale = Vector2(0.65, 0.65)
+frames = SubResource("SpriteFrames_7m2vg")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_2dm64")
+replication_config = SubResource("SceneReplicationConfig_26a21")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,1 @@
+start teeny-tanks.console.exe --server --headless

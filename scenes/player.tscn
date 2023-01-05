@@ -1,14 +1,14 @@
 [gd_scene load_steps=9 format=3 uid="uid://di0r8bejtnlju"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0a6s6"]
-[ext_resource type="Texture2D" uid="uid://crrpw6htx3ypl" path="res://assets/tank.png" id="2_4insk"]
+[ext_resource type="Texture2D" uid="uid://crrpw6htx3ypl" path="res://assets/tank.png" id="2_n8gk5"]
+[ext_resource type="Texture2D" uid="uid://bkl8ipdrw7esn" path="res://assets/shield.png" id="3_efx1x"]
 [ext_resource type="Script" path="res://scripts/player_sync.gd" id="3_en7ly"]
-[ext_resource type="Texture2D" uid="uid://bkl8ipdrw7esn" path="res://assets/shield.png" id="3_hfcak"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pkt14"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm0w"]
 size = Vector2(15.3333, 14.6667)
 
-[sub_resource type="Animation" id="Animation_ufjif"]
+[sub_resource type="Animation" id="Animation_h42xe"]
 resource_name = "respawn"
 length = 3.0
 tracks/0/type = "value"
@@ -36,12 +36,12 @@ tracks/1/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7a24c"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bk631"]
 _data = {
-"respawn": SubResource("Animation_ufjif")
+"respawn": SubResource("Animation_h42xe")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e6un5"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dut10"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -74,20 +74,20 @@ invincibility = false
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 3.14159
 scale = Vector2(0.65, 0.65)
-texture = ExtResource("2_4insk")
+texture = ExtResource("2_n8gk5")
 offset = Vector2(0, 5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(7.15256e-07, 1)
 scale = Vector2(3, 3)
-shape = SubResource("RectangleShape2D_pkt14")
+shape = SubResource("RectangleShape2D_0xm0w")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Shield" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.65, 0.65)
-texture = ExtResource("3_hfcak")
+texture = ExtResource("3_efx1x")
 
 [node name="Label" type="Label" parent="."]
 offset_right = 120.0
@@ -105,12 +105,12 @@ one_shot = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Shield")
 libraries = {
-"": SubResource("AnimationLibrary_7a24c")
+"": SubResource("AnimationLibrary_bk631")
 }
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_e6un5")
+replication_config = SubResource("SceneReplicationConfig_dut10")
 script = ExtResource("3_en7ly")
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]
