@@ -1,7 +1,6 @@
 extends Node
 
 var player_scene = preload("res://scenes/player.tscn")
-var player_list
 
 func _enter_tree():
 	if "--server" in OS.get_cmdline_args():
@@ -16,7 +15,7 @@ func start_network(server: bool) -> void:
 		multiplayer.peer_disconnected.connect(self.destroy_player)
 		peer.create_server(9999)
 	else:
-		peer.create_client("evanrutten.com:" + str(9999))
+		peer.create_client("wss://evanrutten.com:" + str(9999), true)
 	multiplayer.set_multiplayer_peer(peer)
 
 func create_player(id: int) -> void:
