@@ -18,7 +18,7 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 
 func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(int(str(name)))
-	$Camera2D.current = $MultiplayerSynchronizer.is_multiplayer_authority()
+	$Camera2D.enabled = $MultiplayerSynchronizer.is_multiplayer_authority()
 	
 	$Label.set_as_top_level(true)
 	$Label.text = name
@@ -69,7 +69,7 @@ func respawn() -> void:
 	rotation = 0
 	$AnimationPlayer.play("respawn")
 
-@rpc(any_peer, call_local, reliable)
+@rpc("any_peer", "call_local", "reliable")
 func shoot(spawner: StringName) -> void:
 	var bullet = bullet_scene.instantiate()
 	bullet.spawner = spawner
@@ -86,7 +86,7 @@ func update_synchronizer() -> void:
 	$MultiplayerSynchronizer.modulate = $Sprite2D.modulate
 	$MultiplayerSynchronizer.shield_modulate = $Shield.modulate
 
-@rpc(any_peer, call_local, reliable)
+@rpc("any_peer", "call_local", "reliable")
 func hit() -> void:
 	score = 0
 	$RespawnTimer.start()
@@ -97,7 +97,7 @@ func _on_respawn_timer_timeout():
 	$CollisionShape2D.disabled = false
 	respawn()
 
-@rpc(any_peer, call_local, reliable)
+@rpc("any_peer", "call_local", "reliable")
 func explode() -> void:
 	var explosion = explosion_scene.instantiate()
 	explosion.position = position
